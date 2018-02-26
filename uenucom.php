@@ -40,9 +40,15 @@
 // header("content-Type: text/html; charset=utf-8");
 @ini_set('memory_limit', -1);
 ini_set("max_execution_time", "0");
+ini_set('date.timezone','Asia/Shanghai');
 
-error_reporting(E_ALL & ~E_NOTICE);
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
+if(isset($_GET['debug']) && $_GET['debug'] == 1){
+	error_reporting(E_ALL & ~E_NOTICE);
+    error_reporting(E_ERROR | E_WARNING | E_PARSE);
+}else{
+	error_reporting(0);
+}
+
 $q = $_SERVER["QUERY_STRING"];
 $urlarray = explode(".", $q);
 $urlarr   = explode("-", $urlarray[0]);
@@ -1601,7 +1607,7 @@ if($disused =="1") {
 <div class="info03">程序最多允许使用内存量 memory_limit</div><div class="info04"><?php echo @get_cfg_var("memory_limit")?></div>
 <div class="info03">POST最大字节数&nbsp;post_max_size</div><div class="info04"><?php echo @get_cfg_var("post_max_size")?></div>
 <div class="info03">允许最大上传文件&nbsp;upload_max_filesize</div><div class="info04"><?php echo @get_cfg_var("file_uploads")?@get_cfg_var("upload_max_filesize"):"Error";?></div>
-<div class="info03">PHP信息 PHPINFO</div><div class="info04"><?php echo (false !== @eregi("phpinfo",@get_cfg_var("disable_functions")))?NO:"<a href=\"$phpSelf?$style-$icon-phpinfo.shtml\" target=\"_blank\" class=\"static\" title=\" 点击查看 \">PHPINFO</a>"?></div>
+<div class="info03">PHP信息 PHPINFO</div><div class="info04"><?php echo (false !== empty(@get_cfg_var("disable_functions")))?"NO":"<a href=\"{$phpSelf}?{$style}-{$icon}-phpinfo.shtml\" target=\"_blank\" class=\"static\" title=\" 点击查看 \">PHPINFO</a>"; ?></div>
 <div class="info03">Html错误显示</div><div class="info04"><?php echo @get_cfg_var("html_errors")?YES:NO?></div>
 <div class="info03">调试器地址/端口</div><div class="info04"><?php
 $debugerhost=@get_cfg_var("debugger.host")?"YES":"NO";
@@ -1744,7 +1750,7 @@ $isMail = (false !== $MyCheck->isfun("mail"))?"":" disabled";
 <div id="gnu"><b>This PHP probe programe is designed based on the new structure Div + Css , the free open source software, powerful, clear structure and easy to use. </b><br />
 1. To support Windows, linux, Unix, BSD, Sun Solar System.<br />
 2. Support for IE8, IE7, IE6, Firefox, Google chrome, and other browsers. <br />
-3. Support for PHP 4, PHP 5.2, PHP 5.3. <br /><br />
+3. Support for PHP 4, PHP 5.2, PHP 5.3+. <br /><br />
 
 <b>The main use and application of the object: </b><br />
 1. Be familiar with the PHP programming of amateur and professional developers.(Ver2.09.06 extended simple url rewrite) <br />
@@ -1752,7 +1758,7 @@ $isMail = (false !== $MyCheck->isfun("mail"))?"":" disabled";
 3. For the company's customers to buy Virtual host using testing server performance.<br /><br /><b>本程序基于Div+Css 新型架构PHP探针，免费开源的自由软件，功能强大，结构清晰，使用方便。</b><br />
 1.支持Windows, linux, Unix, BSD, Sun Solar系统<br />
 2.支持IE8，IE7，IE6，Firefox,Google chrome等浏览器。<br />
-3.支持PHP 4、PHP 5.2、PHP 5.3。<br />
+3.支持PHP 4、PHP 5.2、PHP 5.3+。<br />
  <br />
 <b>主要用途及适用对象：</b><br />
 1.熟悉PHP编程的业余爱好者及专业开发人员。(OOP编程，PHP5以上支持, V2.09.06增加了创新型的伪静态支持)<br />
